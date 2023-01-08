@@ -8,6 +8,7 @@ const PORT = config.get.port || 5000
 app.use(express.json({extended: true}))
 
 app.use('/api/auth', require('./routes/auth.route'))
+app.use('/api/todo', require('./routes/todo.route'))
 
 
 // connect to DB

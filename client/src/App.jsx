@@ -1,19 +1,23 @@
 import './App.css';
 import Navbar from './components/Navbar';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Registration from './pages/Registration';
-import Login from './pages/Login';
+import {BrowserRouter} from 'react-router-dom'
+import { useRoutes } from './routes';
+import {AuthContext} from './context/AuthContext';
+import useAuth from './hooks/useAuth';
 
 
 function App() {
+  const auth = useAuth();
+  const isLogined = !!auth.token
+  const routes = useRoutes(isLogined)
+
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/registration" element={<Registration />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthContext.Provider value={{...auth, isLogined}}>
+      <BrowserRouter>
+        <Navbar />
+          {routes}
+      </BrowserRouter>
+    </AuthContext.Provider>
   );
 }
 

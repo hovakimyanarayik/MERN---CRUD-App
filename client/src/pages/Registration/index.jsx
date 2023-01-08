@@ -1,18 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthForm from "../../components/AuthForm";
 import axios from "axios";
 
 
 const Registration = () => {
+    const navigate = useNavigate();
 
     const registerHandler = async (values) => {
         try {
-            const response = await axios.post("/api/auth/registration", values, {
+            await axios.post("/api/auth/registration", values, {
                 headers: {
                     "Content-Type": "application/json"
                 }
             });
-            console.log(response);
+            navigate('/login');
         } catch (e) {
             console.log(e);
         }
