@@ -48,4 +48,32 @@ router.delete('/delete/:id', auth, async(req, res) => {
     }
 })
 
+router.put('/complete/:id', auth, async(req, res) => {
+
+    try {
+        const todo = await Todo.findOne({_id: req.params.id})
+        todo.completed = !todo.completed
+        
+        await todo.save()
+
+        res.json(todo)
+    
+    } catch (e) {
+        res.status(500).json({message: "Server Error"});
+    }
+})
+
+router.put('/important/:id', auth, async(req, res) => {
+try {
+    const todo = await Todo.findOne({_id: req.params.id})
+    todo.important = !todo.important
+    
+    await todo.save()
+
+    res.json(todo)
+} catch (e) {
+    res.status(500).json({message: "Server Error"});
+}
+})
+
 module.exports = router

@@ -60,13 +60,40 @@ const Main = () => {
         }
     }
 
+    const handleComplete = async (id) => {
+        try {
+            await axios.put(`/api/todo/complete/${id}`, {}, {
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            getTodos()
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
+    const handleImportant = async (id) => {
+        try {
+            await axios.put(`/api/todo/important/${id}`, {}, {
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            getTodos()
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
+
     return ( 
         <div className="container">
             <div className="main-page">
-                <h4>Add TOdo</h4>
+                <h4>Add Task</h4>
                 <TodoForm onSubmit={handleSubmit} />
-
-                <h3>Activ Todos`</h3>
+                <h3>Active Todos`</h3>
                 <div className="todos">
                     {todos.length ? (
                         todos.map((todo, idx) => (
@@ -75,6 +102,8 @@ const Main = () => {
                                 number={idx+1} 
                                 {...todo}
                                 handleDelete={deleteTodo}
+                                handleComplete={handleComplete}
+                                handleImportant={handleImportant}
                             />
                         ))
                     ) : (
