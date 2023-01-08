@@ -1,8 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const config = require('config')
 
 const app = express()
-const PORT = process.env.PORT || 5000
+const PORT = config.get.port || 5000
 
 app.use(express.json({extended: true}))
 
@@ -12,7 +13,7 @@ app.use('/api/auth', require('./routes/auth.route'))
 // connect to DB
 async function start() {
     try {
-        await mongoose.connect('mongodb+srv://arayik:aroaro1907@cluster0.w27i6zt.mongodb.net/?retryWrites=true&w=majority', {
+        await mongoose.connect(config.get('mongoUrl'), {
             // useNewUrlParser: true,
             // useUnifiedTopology: true,
             // useCreateIndex: true,
